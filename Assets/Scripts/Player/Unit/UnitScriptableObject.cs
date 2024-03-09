@@ -1,5 +1,6 @@
 using Command.Actions;
 using System.Collections.Generic;
+using Command.Commands;
 using UnityEngine;
 
 namespace Command.Player
@@ -12,7 +13,7 @@ namespace Command.Player
         public UnitView UnitPrefab;
         public int MaxHealth;
         public int Power;
-        public List<ActionType> executableCommands;
+        public List<CommandType> executableCommands;
         public Vector3 EnemyBattlePositionOffset;
         public float MovementSpeed;
     }

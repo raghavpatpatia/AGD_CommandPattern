@@ -1,6 +1,7 @@
 using Command.Input;
 using Command.Main;
 using Command.Player;
+using Command.Commands;
 using UnityEngine;
 
 namespace Command.Actions
@@ -10,26 +11,25 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
+        private bool IsSuccessful;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool IsSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
-
-            actorUnit.PlayBattleAnimation(ActionType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            this.IsSuccessful = IsSuccessful;
+            actorUnit.PlayBattleAnimation(CommandType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted() 
         {
             PlayAttackSound();
 
-            if (IsSuccessful())
+            if (IsSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
 

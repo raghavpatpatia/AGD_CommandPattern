@@ -1,4 +1,5 @@
 using Command.Commands;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -90,6 +91,24 @@ namespace Command.Player
             units[activeUnitIndex].ResetUnitIndicator();
             activeUnitIndex--;
             units[activeUnitIndex].StartUnitTurn();
+        }
+
+        public void ResetCurrentActiveUnit()
+        {
+            units[activeUnitIndex].ResetUnitIndicator();
+            activeUnitIndex--;
+            while (activeUnitIndex >= 0)
+            {
+                if (!units[activeUnitIndex].IsAlive())
+                {
+                    activeUnitIndex--;
+                }
+                else
+                {
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
         }
     }
 }
